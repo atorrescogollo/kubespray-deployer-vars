@@ -1,0 +1,1 @@
+upstream_dns_servers: "{{ lookup('env','DNS_SERVERS').split(',') }}"

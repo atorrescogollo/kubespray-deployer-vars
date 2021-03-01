@@ -1,0 +1,16 @@
+argocd_enabled: true
+
+oidc_gangway_dex_enabled: true
+oidc_ca_certificate: "{{ lookup('file','/work/ssl/ca.crt') }}"
+gangway_trust_ca_certificate: "{{ oidc_ca_certificate }}"
+dex_connector_ldap_cacert: "{{ oidc_ca_certificate }}"
+ingress_nginx_tls_cert: "{{ lookup('file','/work/ssl/ingress.crt') }}"
+ingress_nginx_tls_key: "{{ lookup('file','/work/ssl/ingress.key') }}"
+
+oidc_static_secret: "{{ cluster_name | hash('md5') | truncate(10) }}"
+
+dex_connector_ldap_host: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_HOST') }}"
+dex_connector_ldap_binddn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BINDDN') }}"
+dex_connector_ldap_bindpw: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BINDPW') }}"
+dex_connector_ldap_usersearch_basedn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BASEDN') }}"
+dex_connector_ldap_groupsearch_basedn: "{{ dex_connector_ldap_usersearch_basedn }}"

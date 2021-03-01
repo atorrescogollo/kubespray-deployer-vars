@@ -1,0 +1,11 @@
+cluster_name: "{{ lookup('env','KUBESPRAY_DEPLOYER_CLUSTER_NAME') }}"
+
+kube_version: v1.19.0
+
+kube_network_plugin: calico
+
+kube_proxy_strict_arp: true # needed by MetalLB
+
+container_manager: containerd
+
+kubernetes_audit: true

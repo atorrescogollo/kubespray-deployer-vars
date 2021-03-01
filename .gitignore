@@ -1,0 +1,7 @@
+env
+ssl/*.crt
+ssl/*.key
+ssl
+
+cluster_inventory.yml
+kubespray_inventory.ini

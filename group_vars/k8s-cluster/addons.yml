@@ -1,0 +1,20 @@
+helm_enabled: true
+
+registry_enabled: true
+
+metrics_server_enabled: true
+
+ingress_nginx_enabled: true
+
+#cert_manager_enabled: true
+
+metallb_enabled: true
+metallb_ip_range:
+- "{{ lookup('env','KUBESPRAY_DEPLOYER_METALLB_POOL_LOADBALANCED') }}"
+metallb_protocol: "layer2"
+metallb_additional_address_pools:
+  ingress:
+    ip_range:
+    - "{{ lookup('env','KUBESPRAY_DEPLOYER_METALLB_POOL_INGRESS') }}"
+    protocol: "layer2"
+    auto_assign: true
