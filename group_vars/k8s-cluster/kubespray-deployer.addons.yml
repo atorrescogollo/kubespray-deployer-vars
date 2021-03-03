@@ -14,3 +14,5 @@ dex_connector_ldap_binddn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BI
 dex_connector_ldap_bindpw: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BINDPW') }}"
 dex_connector_ldap_usersearch_basedn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BASEDN') }}"
 dex_connector_ldap_groupsearch_basedn: "{{ dex_connector_ldap_usersearch_basedn }}"
+
+argocd_admin_password: "{{ lookup('env','KUBESPRAY_DEPLOYER_ARGOCD_ADMIN_PASSWORD') | default(omit) }}"
