@@ -1,13 +1,18 @@
-argocd_enabled: true
+#
+# roles/kubernetes-apps/ingress-nginx-extras
+#
+ingress_nginx_tls_cert: "{{ lookup('file','/work/ssl/ingress.crt') }}"
+ingress_nginx_tls_key: "{{ lookup('file','/work/ssl/ingress.key') }}"
 
+#
+# roles/kubernetes-apps/oidc-gangway-dex
+#
 oidc_gangway_dex_enabled: true
 oidc_ca_certificate: "{{ lookup('file','/work/ssl/ca.crt') }}"
 gangway_trust_ca_certificate: "{{ oidc_ca_certificate }}"
 dex_connector_ldap_cacert: "{{ oidc_ca_certificate }}"
-ingress_nginx_tls_cert: "{{ lookup('file','/work/ssl/ingress.crt') }}"
-ingress_nginx_tls_key: "{{ lookup('file','/work/ssl/ingress.key') }}"
 
-oidc_static_secret: "{{ cluster_name | hash('md5') | truncate(10) }}"
+oidc_static_secret: "{{ (cluster_name | hash('md5'))[:10] }}"
 
 dex_connector_ldap_host: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_HOST') }}"
 dex_connector_ldap_binddn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BINDDN') }}"
@@ -15,4 +20,17 @@ dex_connector_ldap_bindpw: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BI
 dex_connector_ldap_usersearch_basedn: "{{ lookup('env','KUBESPRAY_DEPLOYER_OIDC_DEX_LDAP_BASEDN') }}"
 dex_connector_ldap_groupsearch_basedn: "{{ dex_connector_ldap_usersearch_basedn }}"
 
+#
+# roles/kubernetes-apps/argocd
+#
+argocd_enabled: true
 argocd_admin_password: "{{ lookup('env','KUBESPRAY_DEPLOYER_ARGOCD_ADMIN_PASSWORD') | default(omit) }}"
+
+#
+# roles/kubernetes-apps/rook-ceph
+#
+rook_ceph_enabled: true
+rook_ceph_external_admin_secret: "{{ lookup('env','KUBESPRAY_DEPLOYER_CEPH_ADMIN_SECRET') }}"
+rook_ceph_external_fsid: "{{ lookup('env','KUBESPRAY_DEPLOYER_CEPH_FSID') }}"
+rook_ceph_external_mon_data: "{{ lookup('env','KUBESPRAY_DEPLOYER_CEPH_MON_DATA') }}"
+rook_ceph_pool: "{{ lookup('env','KUBESPRAY_DEPLOYER_CEPH_POOL') | default('kubernetes') }}"
